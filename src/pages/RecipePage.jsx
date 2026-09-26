@@ -8,7 +8,7 @@ import { formatLabel } from '../api/constants';
 export default function RecipePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { findCachedRecipe, isSaved, addToLibrary, removeFromLibrary } = useApp();
+  const { findCachedRecipe, isSaved, addToLibrary } = useApp();
 
   const [recipe, setRecipe] = useState(() => findCachedRecipe(id));
   const [loading, setLoading] = useState(!recipe);
@@ -77,15 +77,13 @@ export default function RecipePage() {
             {recipe.description}
           </p>
         </div>
-        {saved ? (
-          <button className="btn btn-danger" onClick={() => removeFromLibrary(recipe.id)}>
-            Remove from library
-          </button>
-        ) : (
-          <button className="btn btn-accent" onClick={() => addToLibrary(recipe)}>
-            Save to library
-          </button>
-        )}
+        <button
+          className="btn btn-accent"
+          onClick={() => addToLibrary(recipe)}
+          disabled={saved}
+        >
+          {saved ? 'Saved ✓' : 'Save to library'}
+        </button>
       </div>
 
       <div className="recipe-meta">

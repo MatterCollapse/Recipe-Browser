@@ -91,8 +91,11 @@ export default function LibraryPage() {
             <RecipeRow
               key={recipe.id}
               recipe={recipe}
-              saved
-              onToggleSave={() => removeFromLibrary(recipe.id)}
+              action={{
+                label: 'Remove',
+                onClick: () => removeFromLibrary(recipe.id),
+                variant: 'danger',
+              }}
             />
           ))}
         </ul>

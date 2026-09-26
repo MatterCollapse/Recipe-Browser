@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-export default function RecipeRow({ recipe, saved, onToggleSave, saveLabel, removeLabel }) {
+// `action` describes the single button shown on the row:
+//   { label, onClick, disabled, variant: 'accent' | 'danger' }
+export default function RecipeRow({ recipe, action }) {
   const navigate = useNavigate();
+  const variantClass = action.variant === 'danger' ? 'btn-danger' : 'btn-accent';
 
   return (
     <li className="recipe-row">
@@ -10,15 +13,13 @@ export default function RecipeRow({ recipe, saved, onToggleSave, saveLabel, remo
         <p className="recipe-desc">{recipe.description}</p>
       </button>
       <div className="recipe-row-actions">
-        {saved ? (
-          <button className="btn btn-danger btn-small" onClick={() => onToggleSave(recipe)}>
-            {removeLabel || 'Remove'}
-          </button>
-        ) : (
-          <button className="btn btn-accent btn-small" onClick={() => onToggleSave(recipe)}>
-            {saveLabel || 'Save'}
-          </button>
-        )}
+        <button
+          className={`btn ${variantClass} btn-small`}
+          onClick={action.onClick}
+          disabled={action.disabled}
+        >
+          {action.label}
+        </button>
       </div>
     </li>
   );
